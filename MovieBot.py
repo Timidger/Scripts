@@ -8,7 +8,8 @@ import urllib.parse as urlparse
 # Add the github url when I get it
 BACKLOG = []
 BOT_IDENTIFY_STRING = ("MovieIdentifierBot: indentifies easy movie screen "
-                       "caps by /u/Timidger")
+                       "caps by /u/Timidger "
+                       "@ github.com/timidger/Scripts/MovieBot.py")
 LOGIN_FILE = "login_details.txt"
 SUBREDDIT = "GuessTheMovie"
 
@@ -87,7 +88,6 @@ if __name__ == "__main__":
     print("Authenticated account: {}".format(username))
     try:
         while True:
-            # Every two minutes check the site
             posts = get_new_posts(bot, SUBREDDIT)
             posts = compare_to_backlog(posts)
             for post in posts:
@@ -113,7 +113,8 @@ if __name__ == "__main__":
                         print("Movie posted!")
                         break
             print("Sleeping...")
-            time.sleep(120)
+            # Every 1/2 minute check the site
+            time.sleep(30)
     finally:
         bot.clear_authentication()
 
