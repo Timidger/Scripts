@@ -118,7 +118,6 @@ if __name__ == "__main__":
                         post_answer(post, movie)
                         print("Movie posted!")
                         break
-            print("Sleeping...")
             # Every 1/2 minute check the site
             time.sleep(30)
     finally:
