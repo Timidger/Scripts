@@ -20,8 +20,8 @@ HEADERS = {'User-Agent': "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 "
 def add_to_backlog(post_title):
     assert isinstance(post_title, str), ("Add the titles to the backlog!"
                                             "was {}".format(type(post_title)))
-    if len(BACKLOG) > 9:
-        BACKLOG.pop(-1)
+    if len(BACKLOG) > 10:
+        BACKLOG.pop(0)
     BACKLOG.append(post_title)
 
 def compare_to_backlog(posts):
@@ -105,8 +105,17 @@ if __name__ == "__main__":
                 page.close()
                 for link in links:
                     if "IMDb" in  link.text:
-                        end = link.text.find("(")
-                        movie = link.text[:end].strip()
+                        movie = link.text
+                        # If it has the IMDb divider thing in it
+                        if "-" in movie:
+                            partition = movie.find("-") # IMDb divider
+                            movie = movie[:partition]
+                        # If it has the year in the title
+                        if "(" in movie:
+                            partition = movie.find("(") # Year of pub.
+                            movie = movie[:partition]
+                        movie = movie.strip() # Annoying extra whitespace
+
                         print("Found the movie: {}".format(movie))
                         print("Posting movie...")
                         post_answer(post, movie)
