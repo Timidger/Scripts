@@ -106,14 +106,11 @@ if __name__ == "__main__":
                 for link in links:
                     if "IMDb" in  link.text:
                         movie = link.text
-                        # If it has the IMDb divider thing in it
-                        if "-" in movie:
-                            partition = movie.find("-") # IMDb divider
-                            movie = movie[:partition]
-                        # If it has the year in the title
                         if "(" in movie:
                             partition = movie.find("(") # Year of pub.
                             movie = movie[:partition]
+                        else:
+                            continue # No year == Not a movie
                         movie = movie.strip() # Annoying extra whitespace
 
                         print("Found the movie: {}".format(movie))
